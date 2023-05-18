@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class BookingRest {
     private final BookingUseCase bookingUseCase;
     @GetMapping("/{id}")
-    public ResponseEntity findById(String id){
+    public ResponseEntity findById(@PathVariable String id){
         try {
             return new ResponseEntity<>(bookingUseCase.findById(id), HttpStatus.OK);
         }catch (ServiceException e){
@@ -22,23 +22,23 @@ public class BookingRest {
         }
     }
     @PostMapping
-    public ResponseEntity save(Booking booking){
+    public ResponseEntity save(@RequestBody Booking booking){
         try {
             return new ResponseEntity<>(bookingUseCase.save(booking), HttpStatus.CREATED);
         }catch (ServiceException e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
     @PutMapping
-    public ResponseEntity update(Booking booking){
+    public ResponseEntity update(@RequestBody Booking booking){
         try {
             return new ResponseEntity<>(bookingUseCase.update(booking), HttpStatus.OK);
         }catch (ServiceException e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(String id){
+    public ResponseEntity delete(@PathVariable String id){
         try {
             bookingUseCase.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
