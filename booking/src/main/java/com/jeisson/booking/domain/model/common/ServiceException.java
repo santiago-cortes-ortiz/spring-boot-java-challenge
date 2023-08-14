@@ -5,7 +5,7 @@ import lombok.Builder;
 
 @Builder
 @AllArgsConstructor
-public class ServiceException extends Exception{
+public class ServiceException extends RuntimeException{
     public ServiceException(String message){
         super(message);
     }
